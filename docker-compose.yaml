@@ -65,7 +65,7 @@ services:
       postiz-redis:
         condition: service_healthy
       temporal:
-        condition: service_started
+        condition: service_healthy
     volumes:
       - postiz-config:/config
       - postiz-uploads:/uploads
@@ -138,6 +138,12 @@ services:
     depends_on:
       - temporal-postgresql
       - temporal-elasticsearch
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/7233'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
     volumes:
       - ./dynamicconfig:/etc/temporal/config/dynamicconfig
 
