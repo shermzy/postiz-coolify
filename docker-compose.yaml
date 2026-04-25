@@ -124,6 +124,20 @@ services:
   temporal:
     image: temporalio/auto-setup:1.28.1
     restart: unless-stopped
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+          mkdir -p /etc/temporal/config/dynamicconfig
+          cat > /etc/temporal/config/dynamicconfig/development-sql.yaml <<'EOF'
+          limit.maxIDLength:
+            - value: 255
+              constraints: {}
+          system.forceSearchAttributesCacheRefreshOnRead:
+            - value: true
+              constraints: {}
+          EOF
+          exec /etc/temporal/entrypoint.sh autosetup
     environment:
       DB: postgres12
       DB_PORT: "5432"
@@ -144,8 +158,6 @@ services:
       timeout: 5s
       retries: 18
       start_period: 60s
-    volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
 
 volumes:
   postiz-config:
