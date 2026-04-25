@@ -9,7 +9,7 @@ services:
       SERVICE_URL_POSTIZ_5000: /
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: postgresql://${POSTIZ_DB_USER}:${POSTIZ_DB_PASSWORD}@postiz-postgres:5432/${POSTIZ_DB_NAME}
-      REDIS_URL: redis://:${POSTIZ_REDIS_PASSWORD}@postiz-redis:6379
+      REDIS_URL: redis://postiz-redis:6379
       BACKEND_INTERNAL_URL: http://localhost:3000
       TEMPORAL_ADDRESS: temporal:7233
       IS_GENERAL: "true"
@@ -90,9 +90,8 @@ services:
     restart: unless-stopped
     command: >
       redis-server --appendonly yes
-      --requirepass ${POSTIZ_REDIS_PASSWORD}
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a ${POSTIZ_REDIS_PASSWORD} ping"]
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 3s
       retries: 5
