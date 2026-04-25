@@ -72,6 +72,13 @@ services:
     networks:
       - default
       - coolify
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.routers.postiz-app.rule=Host(`postiz.app.t3ai.xyz`)
+      - traefik.http.routers.postiz-app.entrypoints=http,https
+      - traefik.http.routers.postiz-app.tls=true
+      - traefik.http.services.postiz-app.loadbalancer.server.port=5000
 
   postiz-postgres:
     image: postgres:17-alpine
