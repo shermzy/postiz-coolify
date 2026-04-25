@@ -69,6 +69,9 @@ services:
     volumes:
       - postiz-config:/config
       - postiz-uploads:/uploads
+    networks:
+      - default
+      - coolify
 
   postiz-postgres:
     image: postgres:17-alpine
@@ -165,3 +168,7 @@ volumes:
   postiz-redis-data:
   temporal-postgres-data:
   temporal-elasticsearch-data:
+
+networks:
+  coolify:
+    external: true
