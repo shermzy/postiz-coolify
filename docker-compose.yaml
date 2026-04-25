@@ -128,8 +128,7 @@ services:
       - /bin/sh
       - -ec
       - |
-          export DYNAMIC_CONFIG_FILE_PATH=/tmp/temporal-dynamicconfig.yaml
-          cat > "$DYNAMIC_CONFIG_FILE_PATH" <<'EOF'
+          cat > /tmp/temporal-dynamicconfig.yaml <<'EOF'
           limit.maxIDLength:
             - value: 255
               constraints: {}
