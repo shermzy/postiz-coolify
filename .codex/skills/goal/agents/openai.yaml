@@ -1,6 +1,0 @@
-interface:
-  display_name: "Goal"
-  short_description: "Clarify objective, constraints, and next step"
-  default_prompt: "Use $goal to restate the active objective, constraints, done criteria, and next step."
-policy:
-  allow_implicit_invocation: true
